@@ -50,4 +50,26 @@ return {
       }
     end,
   },
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = '<Tab>',
+            accept_word = '<C-l>',
+            accept_line = '<C-j>',
+            next = '<C-n>',
+            prev = '<C-p>',
+            dismiss = '<C-]>',
+          },
+        },
+        panel = { enabled = false },
+      }
+    end,
+  },
 }
