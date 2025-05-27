@@ -161,6 +161,14 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- fold
+vim.opt.foldmethod = 'indent'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = true -- or true if you want folds closed by default
+vim.opt.fillchars = { fold = ' ' }
+vim.opt.foldnestmax = 3
+vim.opt.foldlevel = 99
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 

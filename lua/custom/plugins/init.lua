@@ -33,4 +33,21 @@ return {
       require('better_escape').setup()
     end,
   },
+  {
+    'Pocco81/auto-save.nvim',
+    config = function()
+      require('auto-save').setup {
+        enabled = true,
+        execution_message = {
+          enabled = true,
+          message = function()
+            return ''
+          end, -- show nothing
+          dim = 0, -- no dimming
+          cleaning_interval = 0, -- no fade-out
+        },
+        trigger_events = { 'InsertLeave', 'TextChanged' },
+      }
+    end,
+  },
 }
