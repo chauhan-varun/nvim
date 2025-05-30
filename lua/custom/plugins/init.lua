@@ -51,25 +51,33 @@ return {
     end,
   },
   {
-    'zbirenbaum/copilot.lua',
-    cmd = 'Copilot',
-    event = 'InsertEnter',
+    'Exafunction/codeium.vim',
+    event = 'BufEnter',
     config = function()
-      require('copilot').setup {
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = '<Tab>',
-            accept_word = '<C-l>',
-            accept_line = '<C-j>',
-            next = '<C-n>',
-            prev = '<C-p>',
-            dismiss = '<C-]>',
-          },
-        },
-        panel = { enabled = false },
-      }
+      -- Disable default bindings
+      vim.g.codeium_disable_bindings = 1
+
+      -- Custom keybindings
+      vim.keymap.set('i', '<C-j>', function()
+        return vim.fn['codeium#Accept']()
+      end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-;>', function()
+        return vim.fn['codeium#CycleCompletions'](1)
+      end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-,>', function()
+        return vim.fn['codeium#CycleCompletions'](-1)
+      end, { expr = true, silent = true })
+      vim.keymap.set('i', '<C-x>', function()
+        return vim.fn['codeium#Clear']()
+      end, { expr = true, silent = true })
+
+      -- Enable for specific filetypes
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'jsx', 'tsx', 'js', 'ts' },
+        callback = function()
+          vim.g.codeium_enabled = 1
+        end,
+      })
     end,
   },
 }
