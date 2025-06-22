@@ -69,7 +69,7 @@ return {
       end, { expr = true, silent = true })
       vim.keymap.set('i', '<C-x>', function()
         return vim.fn['codeium#Clear']()
-      end, { expr = true, silent = true })
+      end, { expr = true, silent = true }) 
 
       -- Enable for specific filetypes
       vim.api.nvim_create_autocmd('FileType', {
