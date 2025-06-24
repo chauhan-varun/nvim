@@ -412,10 +412,22 @@ require('lazy').setup({
         defaults = {
           layout_strategy = 'horizontal',
           layout_config = {
+            -- Global settings
             width = 0.95, -- Use 95% of the screen width
             height = 0.95, -- Use 95% of the screen height
             preview_cutoff = 120,
-            preview_width = 0.65,
+
+            -- Strategy-specific settings
+            horizontal = {
+              preview_width = 0.65,
+            },
+            vertical = {
+              preview_height = 0.65,
+            },
+            -- Center strategy doesn't support preview_width
+            center = {
+              preview_height = 0.4,
+            },
           },
         },
         -- pickers = {}
@@ -681,10 +693,22 @@ require('lazy').setup({
         -- pyright = {},
         rust_analyzer = {},
         solidity = {
-          cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-          filetypes = { "solidity" },
-          root_dir = require('lspconfig').util.root_pattern("hardhat.config.*", "foundry.toml", "package.json", ".git"),
+          cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
+          filetypes = { 'solidity' },
+          root_dir = require('lspconfig').util.root_pattern('foundry.toml', '.git'),
+          settings = {
+            solidity = {
+              includePath = "lib",
+              remappings = (function()
+                local status_ok, foundry = pcall(require, "foundry")
+                return status_ok and foundry.remappings() or {}
+              end)(),
+            },
+          },
         },
+        
+        
+        
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -728,7 +752,6 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         'clangd',
         'rust_analyzer',
-        'solidity',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
