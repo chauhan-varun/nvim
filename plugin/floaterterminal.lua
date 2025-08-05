@@ -1,5 +1,4 @@
-vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>')
-
+vim.keymap.set('t', '<C-[>', '<C-\\><C-n>', { noremap = true })
 local state = {
   floating = {
     buf = -1,

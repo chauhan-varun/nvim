@@ -20,14 +20,6 @@ return {
     },
   },
   {
-    'rebelot/kanagawa.nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'kanagawa'
-    end,
-  },
-  {
     'max397574/better-escape.nvim',
     config = function()
       require('better_escape').setup()
@@ -69,7 +61,7 @@ return {
       end, { expr = true, silent = true })
       vim.keymap.set('i', '<C-x>', function()
         return vim.fn['codeium#Clear']()
-      end, { expr = true, silent = true }) 
+      end, { expr = true, silent = true })
 
       -- Enable for specific filetypes
       vim.api.nvim_create_autocmd('FileType', {
@@ -79,5 +71,9 @@ return {
         end,
       })
     end,
+  },
+  {
+    'mg979/vim-visual-multi',
+    branch = 'master',
   },
 }

@@ -176,6 +176,16 @@ vim.opt.foldlevel = 99
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set('n', '<leader>cf', function()
+  local file = vim.api.nvim_buf_get_name(0)
+  vim.fn.jobstart({ 'clang-format', '-i', file }, {
+    on_exit = function()
+      -- Reload the buffer after formatting
+      vim.cmd 'edit!'
+    end,
+  })
+end, { desc = 'Clang Format current file' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -221,6 +231,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- clang-format auto-format on save
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -698,17 +710,15 @@ require('lazy').setup({
           root_dir = require('lspconfig').util.root_pattern('foundry.toml', '.git'),
           settings = {
             solidity = {
-              includePath = "lib",
+              includePath = 'lib',
               remappings = (function()
-                local status_ok, foundry = pcall(require, "foundry")
+                local status_ok, foundry = pcall(require, 'foundry')
                 return status_ok and foundry.remappings() or {}
               end)(),
             },
           },
         },
-        
-        
-        
+
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -797,7 +807,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
-        -- 
+        --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd' },
