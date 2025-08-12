@@ -53,6 +53,17 @@ return {
       vim.keymap.set('i', '<C-j>', function()
         return vim.fn['codeium#Accept']()
       end, { expr = true, silent = true })
+      -- Toggle Codeium on/off
+      vim.keymap.set('n', '<leader>ct', function()
+        if vim.g.codeium_enabled == 1 then
+          vim.g.codeium_enabled = 0
+          print 'Codeium Disabled'
+        else
+          vim.g.codeium_enabled = 1
+          print 'Codeium Enabled'
+        end
+      end, { desc = 'Toggle Codeium' })
+
       vim.keymap.set('i', '<C-;>', function()
         return vim.fn['codeium#CycleCompletions'](1)
       end, { expr = true, silent = true })
