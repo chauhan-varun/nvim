@@ -765,12 +765,13 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup {
         ensure_installed = {
-          "lua-language-server",
-          "clangd",
-          "rust-analyzer",
-          "nomicfoundation-solidity-language-server", -- ✅ only this for Solidity
-          "prettier",
-          "stylua",
+          'lua-language-server',
+          'clangd',
+          'rust-analyzer',
+          'nomicfoundation-solidity-language-server',
+          'prettier',
+          'vscode-solidity-server',
+          'stylua',
         },
       }
 
