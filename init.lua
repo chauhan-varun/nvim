@@ -763,7 +763,16 @@ require('lazy').setup({
         'clangd',
         'rust_analyzer',
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          "lua-language-server",
+          "clangd",
+          "rust-analyzer",
+          "nomicfoundation-solidity-language-server", -- ✅ only this for Solidity
+          "prettier",
+          "stylua",
+        },
+      }
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

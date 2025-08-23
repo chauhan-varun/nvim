@@ -42,45 +42,51 @@ return {
       }
     end,
   },
+  -- GitHub Copilot
   {
-    'Exafunction/codeium.vim',
-    event = 'BufEnter',
+    'zbirenbaum/copilot.lua',
+    event = { "InsertEnter" },
+    build = ':Copilot auth',
     config = function()
-      -- Disable default bindings
-      vim.g.codeium_disable_bindings = 1
+      local copilot = require 'copilot'
 
-      -- Custom keybindings
-      vim.keymap.set('i', '<C-j>', function()
-        return vim.fn['codeium#Accept']()
-      end, { expr = true, silent = true })
-      -- Toggle Codeium on/off
+      copilot.setup {
+        suggestion = {
+          enabled = true, -- must be explicitly true
+          auto_trigger = true,
+          keymap = {
+            accept = '<C-l>',
+            accept_word = '<C-j>',
+            accept_line = '<C-k>',
+            next = '<C-]>',
+            prev = '<C-[>',
+            dismiss = '<C-e>',
+          },
+        },
+        panel = { enabled = true },
+      }
+
+      -- Toggle Copilot suggestions with <leader>ct
+      local enabled = true
       vim.keymap.set('n', '<leader>ct', function()
-        if vim.g.codeium_enabled == 1 then
-          vim.g.codeium_enabled = 0
-          print 'Codeium Disabled'
-        else
-          vim.g.codeium_enabled = 1
-          print 'Codeium Enabled'
-        end
-      end, { desc = 'Toggle Codeium' })
-
-      vim.keymap.set('i', '<C-;>', function()
-        return vim.fn['codeium#CycleCompletions'](1)
-      end, { expr = true, silent = true })
-      vim.keymap.set('i', '<C-,>', function()
-        return vim.fn['codeium#CycleCompletions'](-1)
-      end, { expr = true, silent = true })
-      vim.keymap.set('i', '<C-x>', function()
-        return vim.fn['codeium#Clear']()
-      end, { expr = true, silent = true })
-
-      -- Enable for specific filetypes
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'jsx', 'tsx', 'js', 'ts' },
-        callback = function()
-          vim.g.codeium_enabled = 1
-        end,
-      })
+        enabled = not enabled
+        copilot.setup {
+          suggestion = {
+            enabled = enabled,
+            auto_trigger = enabled,
+            keymap = {
+              accept = '<C-l>',
+              accept_word = '<C-j>',
+              accept_line = '<C-k>',
+              next = '<C-]>',
+              prev = '<C-[>',
+              dismiss = '<C-e>',
+            },
+          },
+          panel = { enabled = true },
+        }
+        print(enabled and 'ﮧ Copilot ON' or ' Copilot OFF')
+      end, { desc = 'Toggle Copilot' })
     end,
   },
   {
