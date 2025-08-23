@@ -45,7 +45,7 @@ return {
   -- GitHub Copilot
   {
     'zbirenbaum/copilot.lua',
-    event = { "InsertEnter" },
+    event = { 'InsertEnter' },
     build = ':Copilot auth',
     config = function()
       local copilot = require 'copilot'
@@ -55,9 +55,9 @@ return {
           enabled = true, -- must be explicitly true
           auto_trigger = true,
           keymap = {
-            accept = '<C-l>',
+            accept = '<C-n>',
             accept_word = '<C-j>',
-            accept_line = '<C-k>',
+            accept_line = '<C-l>',
             next = '<C-]>',
             prev = '<C-[>',
             dismiss = '<C-e>',
