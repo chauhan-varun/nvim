@@ -26,6 +26,16 @@ return {
     end,
   },
   {
+    'kdheepak/lazygit.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<cr>', { desc = 'Open LazyGit' })
+    end,
+  },
+
+  {
     'Pocco81/auto-save.nvim',
     config = function()
       require('auto-save').setup {
