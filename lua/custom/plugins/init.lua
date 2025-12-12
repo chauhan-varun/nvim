@@ -100,6 +100,16 @@ return {
     end,
   },
   {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'zbirenbaum/copilot.lua',
+    },
+    config = function()
+      require('CopilotChat').setup()
+    end,
+  },
+  {
     'mg979/vim-visual-multi',
     branch = 'master',
   },
