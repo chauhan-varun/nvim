@@ -201,7 +201,7 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
+vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -698,17 +698,15 @@ require('lazy').setup({
           root_dir = require('lspconfig').util.root_pattern('foundry.toml', '.git'),
           settings = {
             solidity = {
-              includePath = "lib",
+              includePath = 'lib',
               remappings = (function()
-                local status_ok, foundry = pcall(require, "foundry")
+                local status_ok, foundry = pcall(require, 'foundry')
                 return status_ok and foundry.remappings() or {}
               end)(),
             },
           },
         },
-        
-        
-        
+
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -797,7 +795,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
-        -- 
+        --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd' },

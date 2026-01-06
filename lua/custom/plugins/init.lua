@@ -135,4 +135,18 @@ return {
       smear_insert_mode = true,
     },
   },
+  {
+    'stevearc/oil.nvim',
+    opts = {
+      default_file_explorer = true,
+      view_options = {
+        show_hidden = true,
+      },
+      skip_confirm_for_simple_edits = true,
+      delete_to_trash = false,
+    },
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- optional (icons)
+    },
+  },
 }
