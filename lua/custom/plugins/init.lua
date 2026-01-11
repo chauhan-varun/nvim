@@ -156,4 +156,57 @@ return {
       'nvim-tree/nvim-web-devicons', -- optional (icons)
     },
   },
+
+  -- Flash: Jump anywhere instantly
+  {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
+      { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
+      { 'r', mode = 'o', function() require('flash').remote() end, desc = 'Remote Flash' },
+      { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'Treesitter Search' },
+      { '<c-s>', mode = { 'c' }, function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
+    },
+  },
+
+  -- Auto close/rename HTML tags
+  {
+    'windwp/nvim-ts-autotag',
+    event = { 'BufReadPre', 'BufNewFile' },
+    opts = {},
+  },
+
+  -- Bufferline: VS Code-like buffer tabs
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    event = 'VeryLazy',
+    opts = {
+      options = {
+        mode = 'buffers',
+        separator_style = 'slant',
+        show_buffer_close_icons = true,
+        show_close_icon = false,
+        diagnostics = 'nvim_lsp',
+        always_show_bufferline = true,
+        offsets = {
+          {
+            filetype = 'oil',
+            text = 'File Explorer',
+            highlight = 'Directory',
+            separator = true,
+          },
+        },
+      },
+    },
+    keys = {
+      { '<Tab>', '<cmd>BufferLineCycleNext<cr>', desc = 'Next buffer' },
+      { '<S-Tab>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev buffer' },
+      { '<leader>bp', '<cmd>BufferLineTogglePin<cr>', desc = 'Pin buffer' },
+      { '<leader>bc', '<cmd>BufferLinePickClose<cr>', desc = 'Pick buffer to close' },
+    },
+  },
 }
