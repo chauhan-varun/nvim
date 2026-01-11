@@ -691,7 +691,7 @@ require('lazy').setup({
         clangd = {},
         -- gopls = {},
         -- pyright = {},
-        rust_analyzer = {},
+        -- rust_analyzer = {},
         solidity = {
           cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
           filetypes = { 'solidity' },
@@ -748,8 +748,13 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'emmet-ls',
         'clangd',
-        'rust_analyzer',
+        'eslint_d',
+        'prettierd',
+        'vtsls',
+        'tailwindcss-language-server',
+        'lua-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -798,6 +803,7 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd' },
         typescriptreact = { 'prettierd' },
       },
@@ -968,7 +974,7 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    main = 'nvim-treesitter', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },

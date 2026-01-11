@@ -5,6 +5,7 @@
 return {
   -- lazy.nvim
   {
+    -- Noice
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
@@ -20,12 +21,14 @@ return {
     },
   },
   {
+    -- Better escape
     'max397574/better-escape.nvim',
     config = function()
       require('better_escape').setup()
     end,
   },
   {
+    -- Lazy git
     'kdheepak/lazygit.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -36,6 +39,7 @@ return {
   },
 
   {
+    -- Auto save
     'Pocco81/auto-save.nvim',
     config = function()
       require('auto-save').setup {
@@ -110,10 +114,12 @@ return {
     end,
   },
   {
+    -- Multi cursor
     'mg979/vim-visual-multi',
     branch = 'master',
   },
   {
+    -- Smear cursor
     'sphamba/smear-cursor.nvim',
     opts = {
       -- Smear cursor when switching buffers or windows.
@@ -136,6 +142,7 @@ return {
     },
   },
   {
+    -- File explorer
     'stevearc/oil.nvim',
     opts = {
       default_file_explorer = true,
