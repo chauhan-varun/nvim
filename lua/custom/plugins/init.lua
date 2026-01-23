@@ -161,13 +161,52 @@ return {
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
-    opts = {},
+    opts = {
+      char = {
+        jump_labels = true,
+      },
+    },
     keys = {
-      { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Flash' },
-      { 'S', mode = { 'n', 'x', 'o' }, function() require('flash').treesitter() end, desc = 'Flash Treesitter' },
-      { 'r', mode = 'o', function() require('flash').remote() end, desc = 'Remote Flash' },
-      { 'R', mode = { 'o', 'x' }, function() require('flash').treesitter_search() end, desc = 'Treesitter Search' },
-      { '<c-s>', mode = { 'c' }, function() require('flash').toggle() end, desc = 'Toggle Flash Search' },
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump()
+        end,
+        desc = 'Flash',
+      },
+      {
+        'S',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').treesitter()
+        end,
+        desc = 'Flash Treesitter',
+      },
+      {
+        'r',
+        mode = 'o',
+        function()
+          require('flash').remote()
+        end,
+        desc = 'Remote Flash',
+      },
+      {
+        'R',
+        mode = { 'o', 'x' },
+        function()
+          require('flash').treesitter_search()
+        end,
+        desc = 'Treesitter Search',
+      },
+      {
+        '<c-s>',
+        mode = { 'c' },
+        function()
+          require('flash').toggle()
+        end,
+        desc = 'Toggle Flash Search',
+      },
     },
   },
 
@@ -207,6 +246,16 @@ return {
       { '<S-Tab>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Prev buffer' },
       { '<leader>bp', '<cmd>BufferLineTogglePin<cr>', desc = 'Pin buffer' },
       { '<leader>bc', '<cmd>BufferLinePickClose<cr>', desc = 'Pick buffer to close' },
+      { '<leader>bb', '<cmd>BufferLinePick<cr>', desc = 'Pick buffer' },
+      { '<leader>1', '<cmd>BufferLineGoToBuffer 1<cr>' },
+      { '<leader>2', '<cmd>BufferLineGoToBuffer 2<cr>' },
+      { '<leader>3', '<cmd>BufferLineGoToBuffer 3<cr>' },
+      { '<leader>4', '<cmd>BufferLineGoToBuffer 4<cr>' },
+      { '<leader>5', '<cmd>BufferLineGoToBuffer 5<cr>' },
+      { '<leader>6', '<cmd>BufferLineGoToBuffer 6<cr>' },
+      { '<leader>7', '<cmd>BufferLineGoToBuffer 7<cr>' },
+      { '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>' },
+      { '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>' },
     },
   },
 }
