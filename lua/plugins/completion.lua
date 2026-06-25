@@ -34,6 +34,11 @@ return {
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
     opts = {
+      enabled = function()
+        -- Disable blink.cmp during visual-multi mode to prevent key conflicts
+        return not (vim.g.VM_active == 1 or (vim.g.VM and vim.g.VM.is_active == 1))
+      end,
+
       keymap = {
         -- Use 'enter' preset: <CR> accepts, <C-y> also works
         -- <C-space> opens menu, <C-e> closes, <C-k> toggles signature help
