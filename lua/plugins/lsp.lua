@@ -134,15 +134,6 @@ return {
       local servers = {
         clangd = {},
 
-        solidity = {
-          cmd      = { 'nomicfoundation-solidity-language-server', '--stdio' },
-          filetypes = { 'solidity' },
-          root_dir = require('lspconfig').util.root_pattern('foundry.toml', '.git'),
-          settings = {
-            solidity = { includePath = 'lib', remappings = {} },
-          },
-        },
-
         -- Emmet: HTML / CSS / JSX / TSX completions and expansion
         emmet_ls = {
           filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact' },

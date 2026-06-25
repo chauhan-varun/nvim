@@ -2,6 +2,9 @@
 
 A custom, fully modular Neovim configuration built from scratch.
 
+> [!NOTE]
+> Looking to learn Vim? Check out the comprehensive [Vim & Neovim Cheat Sheet / Command Guide](file:///home/varun/.config/nvim/VIM_GUIDE.md)!
+
 ## Structure
 
 ```
@@ -96,7 +99,7 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 | [mason-tool-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim) | Auto-installs tools on startup |
 | [lazydev.nvim](https://github.com/folke/lazydev.nvim) | Neovim API completions for Lua files |
 
-**Installed servers:** `lua_ls`, `clangd`, `vtsls`, `solidity`, `emmet_ls`
+**Installed servers:** `lua_ls`, `clangd`, `vtsls`, `emmet_ls`
 
 **Installed tools:** `stylua`, `prettierd`, `eslint_d`, `emmet-ls`, `lua-language-server`
 
@@ -125,7 +128,7 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting, indentation, folding |
 | [nvim-treesitter-context](https://github.com/nvim-treesitter/nvim-treesitter-context) | Pins current function/class at top of window while scrolling |
 
-**Installed parsers:** bash, c, cpp, html, css, javascript, typescript, tsx, lua, json, markdown, solidity, vim, vimdoc
+**Installed parsers:** bash, c, cpp, html, css, javascript, typescript, tsx, lua, json, markdown, vim, vimdoc
 
 ### 🐙 Git (`plugins/git.lua`)
 
@@ -246,6 +249,16 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 
 > **Tip:** `[C` jumps up to the surrounding function/class shown by treesitter-context.
 
+### LeetCode
+
+| Key | Action |
+|---|---|
+| `<leader>ll` | Open problem picker list |
+| `<leader>ld` | Toggle problem description |
+| `<leader>lr` | Run code against test cases |
+| `<leader>ls` | Submit solution code |
+| `<leader>li` | Show problem info / stats |
+
 ### Formatting & Linting
 
 | Key | Action |
@@ -281,7 +294,7 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 | `r` | Remote flash (operator-pending) |
 | `R` | Treesitter search (o / v) |
 | `<C-s>` | Toggle Flash in command mode |
-| `<leader>-` | Open Yazi at current file |
+| `-` | Open Yazi at current file |
 | `<leader>cw` | Open Yazi at cwd |
 | `<leader>ut` | Resume last Yazi session |
 

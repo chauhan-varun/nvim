@@ -70,10 +70,42 @@ return {
   -- ---------------------------------------------------------------------------
   {
     'kawre/leetcode.nvim',
-    opts         = {},
+    lazy         = false,
+    opts         = {
+      injector = {
+        ["cpp"] = {
+          before = {
+            "// Local struct definitions for clangd LSP (ignored by LeetCode on submit)",
+            "struct ListNode {",
+            "    int val;",
+            "    ListNode *next;",
+            "    ListNode() : val(0), next(nullptr) {}",
+            "    ListNode(int x) : val(x), next(nullptr) {}",
+            "    ListNode(int x, ListNode *next) : val(x), next(next) {}",
+            "};",
+            "",
+            "struct TreeNode {",
+            "    int val;",
+            "    TreeNode *left;",
+            "    TreeNode *right;",
+            "    TreeNode() : val(0), left(nullptr), right(nullptr) {}",
+            "    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}",
+            "    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}",
+            "};",
+          },
+        },
+      },
+    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
+    },
+    keys = {
+      { '<leader>ll', '<cmd>Leet list<cr>',         desc = 'LeetCode: List Problems' },
+      { '<leader>ld', '<cmd>Leet desc toggle<cr>',  desc = 'LeetCode: Toggle Description' },
+      { '<leader>lr', '<cmd>Leet run<cr>',          desc = 'LeetCode: Run Test Cases' },
+      { '<leader>ls', '<cmd>Leet submit<cr>',       desc = 'LeetCode: Submit Solution' },
+      { '<leader>li', '<cmd>Leet info<cr>',         desc = 'LeetCode: Show Info' },
     },
   },
 }
