@@ -1,6 +1,6 @@
-# varun's nvim config
+# Varun's nvim config
 
-Personal Neovim configuration built on top of [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim), fully refactored into a modular structure.
+A custom, fully modular Neovim configuration built from scratch.
 
 ## Structure
 
@@ -43,7 +43,7 @@ Personal Neovim configuration built on top of [kickstart.nvim](https://github.co
 mv ~/.config/nvim ~/.config/nvim.bak
 
 # Clone
-git clone https://github.com/<your-username>/nvim.git ~/.config/nvim
+git clone https://github.com/chauhan-varun/nvim.git ~/.config/nvim
 
 # Start Neovim — lazy.nvim will install everything automatically
 nvim

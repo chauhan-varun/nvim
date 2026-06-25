@@ -21,7 +21,6 @@ return {
           accept_suggestion = '<C-n>',
           clear_suggestion  = '<C-e>',
           accept_word       = '<C-j>',
-          accept_line       = '<C-l>',
         },
       }
     end,
