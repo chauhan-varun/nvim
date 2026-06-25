@@ -2,6 +2,9 @@
 
 A custom, fully modular Neovim configuration built from scratch.
 
+> [!NOTE]
+> Looking to learn Vim? Check out the comprehensive [Vim & Neovim Cheat Sheet / Command Guide](file:///home/varun/.config/nvim/VIM_GUIDE.md)!
+
 ## Structure
 
 ```
@@ -246,6 +249,16 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 
 > **Tip:** `[C` jumps up to the surrounding function/class shown by treesitter-context.
 
+### LeetCode
+
+| Key | Action |
+|---|---|
+| `<leader>ll` | Open problem picker list |
+| `<leader>ld` | Toggle problem description |
+| `<leader>lr` | Run code against test cases |
+| `<leader>ls` | Submit solution code |
+| `<leader>li` | Show problem info / stats |
+
 ### Formatting & Linting
 
 | Key | Action |
@@ -281,7 +294,7 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 | `r` | Remote flash (operator-pending) |
 | `R` | Treesitter search (o / v) |
 | `<C-s>` | Toggle Flash in command mode |
-| `<leader>-` | Open Yazi at current file |
+| `-` | Open Yazi at current file |
 | `<leader>cw` | Open Yazi at cwd |
 | `<leader>ut` | Resume last Yazi session |
 

@@ -30,7 +30,7 @@ return {
 
   -- ---------------------------------------------------------------------------
   -- Yazi: terminal file manager embedded in Neovim
-  --   <leader>-   — open yazi at the current file's directory
+  --   -           — open yazi at the current file's directory
   --   <leader>cw  — open yazi at the current working directory
   --   <leader>ut  — resume the last yazi session
   -- ---------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',
     keys  = {
-      { '<leader>-',  '<cmd>Yazi<cr>',        desc = 'Open yazi at current file' },
+      { '-',          '<cmd>Yazi<cr>',        desc = 'Open yazi at current file' },
       { '<leader>cw', '<cmd>Yazi cwd<cr>',    desc = 'Open yazi at cwd' },
       { '<leader>ut', '<cmd>Yazi toggle<cr>', desc = 'Resume last yazi session' },
     },
