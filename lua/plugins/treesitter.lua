@@ -14,7 +14,7 @@ return {
         'bash', 'c', 'cpp', 'diff', 'html', 'css',
         'javascript', 'json', 'lua', 'luadoc',
         'markdown', 'markdown_inline', 'query',
-        'solidity', 'tsx', 'typescript', 'vim', 'vimdoc',
+        'tsx', 'typescript', 'vim', 'vimdoc',
       },
       -- Auto-install parsers for any filetype opened (if not already installed)
       auto_install = true,
