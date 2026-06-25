@@ -317,6 +317,7 @@ Run `:Lazy` to check plugin status. Run `:Mason` to check LSP/tool status.
 | `<C-j>` | Accept next word |
 | `<C-l>` | Accept next line |
 | `<C-e>` | Dismiss/clear suggestion |
+| `<leader>ts` | Toggle Supermaven on/off |
 
 ### Multi-cursor (vim-visual-multi)
 

@@ -237,4 +237,4 @@ Your personal configuration adds several plugins that run alongside standard Vim
 * **Fuzzy Finder:** Open with `<leader>ff` (Telescope) or search file content with `<leader>fg`.
 * **File Manager:** Press `-` in Normal mode to open Yazi.
 * **LSP Rename:** Press `grn` to rename variables project-wide.
-* **Autocomplete Selection:** Use `<C-n>`, `<C-j>`, `<C-l>` for Supermaven inline completions.
+* **Autocomplete Selection:** Use `<C-n>`, `<C-j>`, `<C-l>` for Supermaven inline completions, and `<leader>ts` to toggle Supermaven on/off.
