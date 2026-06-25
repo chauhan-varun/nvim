@@ -66,10 +66,30 @@ return {
   },
 
   -- ---------------------------------------------------------------------------
+  -- image.nvim: render images in terminal (required by leetcode.nvim)
+  -- Needs: imagemagick (pacman -S imagemagick) + Kitty terminal
+  -- Must load BEFORE leetcode.nvim so setup() is called before it's require'd
+  -- ---------------------------------------------------------------------------
+  {
+    '3rd/image.nvim',
+    lazy     = false,   -- must be eager — leetcode checks require('image') at load time
+    priority = 1001,    -- load before everything else
+    config   = function()
+      require('image').setup({
+        backend   = 'kitty',
+        processor = 'magick_cli',
+        max_width_window_percentage  = 50,
+        max_height_window_percentage = 50,
+      })
+    end,
+  },
+
+  -- ---------------------------------------------------------------------------
   -- LeetCode: solve LeetCode problems without leaving Neovim
   -- ---------------------------------------------------------------------------
   {
     'kawre/leetcode.nvim',
+    build        = ':TSUpdate html', -- tree-sitter-html for question formatting
     lazy         = false,
     opts         = {
       injector = {
@@ -95,10 +115,13 @@ return {
           },
         },
       },
+      image_support = true,   -- enable image rendering via snacks.nvim
+      picker = { provider = 'fzf-lua' }, -- use your existing fzf-lua
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
+      '3rd/image.nvim',  -- leetcode.nvim specifically requires this, not snacks
     },
     keys = {
       { '<leader>ll', '<cmd>Leet list<cr>',         desc = 'LeetCode: List Problems' },
