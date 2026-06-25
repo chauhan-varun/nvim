@@ -201,7 +201,7 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-vim.keymap.set('n', '-', '<cmd>Oil<CR>', { desc = 'Open parent directory' })
+vim.keymap.set('n', '-', '<cmd>Yazi<CR>', { desc = 'Open yazi at the current file' })
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -689,6 +689,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
+        jdtls = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -701,7 +702,10 @@ require('lazy').setup({
               includePath = 'lib',
               remappings = (function()
                 local status_ok, foundry = pcall(require, 'foundry')
-                return status_ok and foundry.remappings() or {}
+                if status_ok and type(foundry.remappings) == 'function' then
+                  return foundry.remappings()
+                end
+                return {}
               end)(),
             },
           },
@@ -748,12 +752,13 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'google-java-format',
         'emmet-ls',
         'clangd',
+        'jdtls',
         'eslint_d',
         'prettierd',
         'vtsls',
-        'tailwindcss-language-server',
         'lua-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -807,6 +812,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        java = { 'google-java-format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -928,8 +934,11 @@ require('lazy').setup({
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
+        transparent = true,
         styles = {
           comments = { italic = false }, -- Disable italics in comments
+          sidebars = 'transparent',
+          floats = 'transparent',
         },
       }
 
@@ -982,11 +991,11 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
     build = ':TSUpdate',
-    main = 'nvim-treesitter', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

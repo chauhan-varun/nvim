@@ -63,10 +63,11 @@ return {
     build = ':Copilot auth',
     config = function()
       local copilot = require 'copilot'
+      local copilot_command = require 'copilot.command'
 
       copilot.setup {
         suggestion = {
-          enabled = true, -- must be explicitly true
+          enabled = true,
           auto_trigger = true,
           keymap = {
             accept = '<C-n>',
@@ -80,26 +81,12 @@ return {
         panel = { enabled = true },
       }
 
-      -- Toggle Copilot suggestions with <leader>ct
+      -- Keep Copilot enabled by default.
       local enabled = true
       vim.keymap.set('n', '<leader>ct', function()
         enabled = not enabled
-        copilot.setup {
-          suggestion = {
-            enabled = enabled,
-            auto_trigger = enabled,
-            keymap = {
-              accept = '<C-l>',
-              accept_word = '<C-j>',
-              accept_line = '<C-k>',
-              next = '<C-]>',
-              prev = '<C-[>',
-              dismiss = '<C-e>',
-            },
-          },
-          panel = { enabled = true },
-        }
-        print(enabled and 'ﮧ Copilot ON' or ' Copilot OFF')
+        copilot_command[enabled and 'enable' or 'disable']()
+        print(enabled and 'Copilot ON' or 'Copilot OFF')
       end, { desc = 'Toggle Copilot' })
     end,
   },
@@ -142,18 +129,36 @@ return {
     },
   },
   {
-    -- File explorer
-    'stevearc/oil.nvim',
-    opts = {
-      default_file_explorer = true,
-      view_options = {
-        show_hidden = true,
+    ---@type 'mikavilpas/yazi.nvim'
+    'mikavilpas/yazi.nvim',
+    event = 'VeryLazy',
+    keys = {
+      -- 👇 in this section, choose your own keybindings!
+      {
+        '<leader>-',
+        '<cmd>Yazi<cr>',
+        desc = 'Open yazi at the current file',
       },
-      skip_confirm_for_simple_edits = true,
-      delete_to_trash = false,
+      {
+        -- Open in the current working directory
+        '<leader>cw',
+        '<cmd>Yazi cwd<cr>',
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        -- NOTE: this requires a version of yazi that includes
+        -- https://github.com/sxyazi/yazi/pull/1305 (not yet released)
+        '<leader>ut',
+        '<cmd>Yazi toggle<cr>',
+        desc = 'Resume the last yazi session',
+      },
     },
-    dependencies = {
-      'nvim-tree/nvim-web-devicons', -- optional (icons)
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = true,
+      keymaps = {
+        show_help = '<f1>',
+      },
     },
   },
 
@@ -231,14 +236,6 @@ return {
         show_close_icon = false,
         diagnostics = 'nvim_lsp',
         always_show_bufferline = true,
-        offsets = {
-          {
-            filetype = 'oil',
-            text = 'File Explorer',
-            highlight = 'Directory',
-            separator = true,
-          },
-        },
       },
     },
     keys = {
@@ -256,6 +253,21 @@ return {
       { '<leader>7', '<cmd>BufferLineGoToBuffer 7<cr>' },
       { '<leader>8', '<cmd>BufferLineGoToBuffer 8<cr>' },
       { '<leader>9', '<cmd>BufferLineGoToBuffer 9<cr>' },
+    },
+  },
+  {
+    'ThePrimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+    keys = {
+      { '<leader>tg', '<cmd>VimBeGood<cr>', desc = 'Practice: VimBeGood' },
+    },
+  },
+  {
+    'kawre/leetcode.nvim',
+    opts = {},
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
     },
   },
 }
