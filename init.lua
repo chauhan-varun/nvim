@@ -100,9 +100,8 @@ vim.g.have_nerd_font = true
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+-- Relative line numbers: makes vim motions easy (5j, 12k, d8j, etc.)
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -161,9 +160,9 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
--- fold
-vim.opt.foldmethod = 'indent'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- fold (using native Neovim 0.10+ Treesitter folding)
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldenable = true -- or true if you want folds closed by default
 vim.opt.fillchars = { fold = ' ' }
 vim.opt.foldnestmax = 3
@@ -201,7 +200,7 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-vim.keymap.set('n', '-', '<cmd>Yazi<CR>', { desc = 'Open yazi at the current file' })
+-- Yazi is mapped to <leader>- in custom plugins
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
@@ -689,7 +688,6 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
-        jdtls = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -700,24 +698,13 @@ require('lazy').setup({
           settings = {
             solidity = {
               includePath = 'lib',
-              remappings = (function()
-                local status_ok, foundry = pcall(require, 'foundry')
-                if status_ok and type(foundry.remappings) == 'function' then
-                  return foundry.remappings()
-                end
-                return {}
-              end)(),
+              remappings = {},
             },
           },
         },
 
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        -- TypeScript / JavaScript LSP (vtsls: modern, faster alternative to ts_ls)
+        vtsls = {},
         --
 
         lua_ls = {
@@ -751,14 +738,12 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
-        'google-java-format',
-        'emmet-ls',
-        'clangd',
-        'jdtls',
-        'eslint_d',
-        'prettierd',
-        'vtsls',
+        'stylua',    -- Lua formatter
+        'emmet-ls',  -- Emmet for HTML/CSS/JSX/TSX
+        'clangd',    -- C/C++ LSP
+        'eslint_d',  -- JS/TS linter
+        'prettierd', -- JS/TS/HTML/CSS formatter
+        'vtsls',     -- TypeScript/JavaScript LSP
         'lua-language-server',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -811,16 +796,14 @@ require('lazy').setup({
         end
       end,
       formatters_by_ft = {
-        lua = { 'stylua' },
-        java = { 'google-java-format' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd' },
+        lua            = { 'stylua' },
+        javascript     = { 'prettierd', stop_after_first = true },
+        javascriptreact = { 'prettierd', stop_after_first = true },
+        typescript     = { 'prettierd' },
         typescriptreact = { 'prettierd' },
+        css            = { 'prettierd' },
+        html           = { 'prettierd' },
+        json           = { 'prettierd' },
       },
     },
   },
@@ -844,15 +827,13 @@ require('lazy').setup({
           return 'make install_jsregexp'
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          -- Pre-built snippets for JS, TS, HTML, CSS, and more
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
         opts = {},
       },
@@ -896,9 +877,7 @@ require('lazy').setup({
       },
 
       completion = {
-        -- By default, you may press `<c-space>` to show the documentation.
-        -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 200 },
       },
 
       sources = {
@@ -910,14 +889,8 @@ require('lazy').setup({
 
       snippets = { preset = 'luasnip' },
 
-      -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-      -- which automatically downloads a prebuilt binary when enabled.
-      --
-      -- By default, we use the Lua implementation instead, but you may enable
-      -- the rust implementation via `'prefer_rust_with_warning'`
-      --
-      -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
+      -- Rust-based fuzzy matcher: faster completions (downloads a prebuilt binary)
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
@@ -995,7 +968,11 @@ require('lazy').setup({
     build = ':TSUpdate',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash', 'c', 'cpp', 'diff', 'html', 'css', 'javascript', 'json',
+        'lua', 'luadoc', 'markdown', 'markdown_inline', 'query',
+        'solidity', 'tsx', 'typescript', 'vim', 'vimdoc',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
